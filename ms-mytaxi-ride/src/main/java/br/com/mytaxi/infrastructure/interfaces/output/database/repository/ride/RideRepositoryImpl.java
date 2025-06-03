@@ -43,8 +43,6 @@ class RideRepositoryImpl implements RideRepository {
     }
 
     private Ride mapDomainFromEntity(RideEntity entity) {
-        var candidate = RideDatabaseMapper.toDomain(entity);
-        candidate.validate();
-        return candidate.getValue();
+        return RideDatabaseMapper.toDomain(entity).getValue();
     }
 }

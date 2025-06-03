@@ -20,9 +20,7 @@ class RequestRideUseCaseImpl implements RequestRideUseCase {
 
     @Override
     public RequestRideOutputDTO execute(RequestRideInputDTO inputDTO) {
-        var candidate = RideApplicationMapper.toDomain(inputDTO);
-        candidate.validate();
-        var ride = candidate.getValue();
+        var ride = RideApplicationMapper.toDomain(inputDTO).getValue();
         var accountDTO = searchAccountGateway.search(ride.getPassengerId());
         if (accountDTO.isDriver()) {
             throw new DomainException("validation.ride.account.do.not.belong.to.a.passenger");

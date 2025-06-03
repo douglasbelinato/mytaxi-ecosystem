@@ -17,9 +17,8 @@ class SearchRideUseCaseImpl implements SearchRideUseCase {
 
     @Override
     public SearchRideOutputDTO execute(SearchRideInputDTO inputDTO) {
-        var candidate = Id.of("id", inputDTO.id());
-        candidate.validate();
-        var ride = rideRepository.findByIdOrThrow(candidate.getValue());
+        var id = Id.of("id", inputDTO.id()).getValue();
+        var ride = rideRepository.findByIdOrThrow(id);
         return RideApplicationMapper.toSearchRideOutputDTO(ride);
     }
 }

@@ -4,6 +4,7 @@ import br.com.mytaxi.application.output.rest.dto.account.AccountDTO;
 import br.com.mytaxi.infrastructure.config.test.BaseTest;
 import br.com.mytaxi.infrastructure.config.test.apimock.data.accountsearch.AccountSearchApiMockData;
 import br.com.mytaxi.infrastructure.interfaces.input.rest.controller.sharedstep.AcceptRideSharedStep;
+import br.com.mytaxi.infrastructure.interfaces.input.rest.controller.sharedstep.RegisterPositionSharedStep;
 import br.com.mytaxi.infrastructure.interfaces.input.rest.controller.sharedstep.RequestRideSharedStep;
 import br.com.mytaxi.infrastructure.interfaces.input.rest.controller.sharedstep.StartRideSharedStep;
 import br.com.mytaxi.infrastructure.interfaces.input.rest.dto.exception.ExceptionRS;
@@ -32,6 +33,9 @@ class RegisterPositionControllerTest extends BaseTest {
     @Inject
     private StartRideSharedStep startRideSharedStep;
 
+    @Inject
+    private RegisterPositionSharedStep registerPositionSharedStep;
+
     @Test
     void testC01ShouldRegisterPosition() {
         var passengerId = UUID.randomUUID().toString();
@@ -41,13 +45,7 @@ class RegisterPositionControllerTest extends BaseTest {
         var requestRideResponse = requestRideSharedStep.success(passengerId);
         acceptRideSharedStep.success(requestRideResponse.id(), driverId);
         startRideSharedStep.success(requestRideResponse.id());
-        RestAssured.given()
-                .contentType(ContentType.JSON)
-                .body(RegisterPositionRQ.builder().latitude(-24.955282).longitude(-53.459054).build())
-                .when()
-                .post(String.format(PATH, requestRideResponse.id()))
-                .then()
-                .statusCode(204);
+        registerPositionSharedStep.success(requestRideResponse.id(), -24.955282, -53.459054);
     }
 
     @Test
@@ -117,6 +115,5 @@ class RegisterPositionControllerTest extends BaseTest {
                 .account(AccountDTO.builder().id(id).isPassenger(isPassenger).isDriver(!isPassenger).build())
                 .build();
     }
-
 
 }

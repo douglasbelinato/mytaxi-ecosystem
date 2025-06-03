@@ -21,17 +21,15 @@ public final class Distance {
 
     private final Double value;
 
-    public static Candidate<Distance> create(Candidate<Coordinate> candidateFrom, Candidate<Coordinate> candidateTo) {
+    public static Candidate<Distance> create(Coordinate from, Coordinate to) {
         var fieldName = "distance";
         var candidateBuilder = Candidate.<Distance>builder();
         var constraints = Constraints.builder().fieldName(fieldName);
-        if (candidateFrom == null || candidateTo == null) {
+        if (from == null || to == null) {
             constraints.add(fieldName, "from and to coordinates must not be null");
-        } else if (candidateFrom.isNotValid() || candidateTo.isNotValid()) {
-            constraints.add(fieldName, "from and to coordinates must be valid");
         } else {
             candidateBuilder.value(Distance.builder().
-                    value(calculateHaversineFormula(candidateFrom.getValue(), candidateTo.getValue()))
+                    value(calculateHaversineFormula(from, to))
                     .build());
         }
         return candidateBuilder.constraints(constraints.build()).build();
@@ -41,8 +39,8 @@ public final class Distance {
         var fieldName = "distance";
         var candidateBuilder = Candidate.<Distance>builder();
         var constraints = Constraints.builder().fieldName(fieldName);
-        if (distance == null) {
-            constraints.add(fieldName, "must not be null");
+        if (distance == null || distance < 0) {
+            constraints.add(fieldName, "must not be null or less than zero");
         } else {
             candidateBuilder.value(Distance.builder().
                     value(distance)

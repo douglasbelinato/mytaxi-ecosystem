@@ -18,9 +18,7 @@ class RegisterPositionUseCaseImpl implements RegisterPositionUseCase {
 
     @Override
     public void execute(RegisterPositionInputDTO inputDTO) {
-        var positionCandidate = Position.create(inputDTO.rideId(), inputDTO.latitude(), inputDTO.longitude());
-        positionCandidate.validate();
-        var position = positionCandidate.getValue();
+        var position = Position.create(inputDTO.rideId(), inputDTO.latitude(), inputDTO.longitude()).getValue();
         var ride = rideRepository.findByIdOrThrow(position.getRideId());
         if (ride.getStatus().isNotInProgress()) {
             throw new DomainException("validation.ride.must.be.in.progress.to.register.position");

@@ -32,10 +32,11 @@ public final class Candidate<T> {
         return !constraints.exist();
     }
 
-    public void validate() {
+    public T getValue() {
         if (isNotValid()) {
             throw new DomainException(constraints);
         }
+        return value;
     }
 
 }

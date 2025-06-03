@@ -15,9 +15,7 @@ class StartRideUseCaseImpl implements StartRideUseCase {
 
     @Override
     public void execute(StartRideInputDTO inputDTO) {
-        var idCandidate = Id.of("id", inputDTO.id());
-        idCandidate.validate();
-        var id = idCandidate.getValue();
+        var id = Id.of("id", inputDTO.id()).getValue();
         var ride = rideRepository.findByIdOrThrow(id);
         ride.start();
         rideRepository.save(ride);

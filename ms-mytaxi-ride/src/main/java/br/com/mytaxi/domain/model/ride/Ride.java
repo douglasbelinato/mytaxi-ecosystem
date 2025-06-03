@@ -38,14 +38,12 @@ public final class Ride {
         var passengerIdCandidate = Id.of("passengerId", passengerId);
         var fromCandidate = Coordinate.create("from", latitudeFrom, longitudeFrom);
         var toCandidate = Coordinate.create("to", latitudeTo, longitudeTo);
-        var distanceCandidate = Distance.create(fromCandidate, toCandidate);
         var constraints = Constraints.builder()
                 .fieldName("ride")
                 .addFromCandidates(List.of(
                         passengerIdCandidate,
                         fromCandidate,
-                        toCandidate,
-                        distanceCandidate
+                        toCandidate
                 )).build();
         var candidateBuilder = Candidate.<Ride>builder().constraints(constraints);
         if (constraints.doesNotExist()) {
@@ -55,7 +53,6 @@ public final class Ride {
                     .status(RideStatus.create().getValue())
                     .from(fromCandidate.getValue())
                     .to(toCandidate.getValue())
-                    .distance(distanceCandidate.getValue())
                     .build());
         }
         return candidateBuilder.build();
@@ -123,6 +120,13 @@ public final class Ride {
 
     public void start() {
         status.toInProgress();
+    }
+
+    public void complete(Distance totalDistance) {
+        status.toCompleted();
+        distance = totalDistance;
+        fare = Money.create("fare",
+                new BigDecimal("2.1").multiply(BigDecimal.valueOf(totalDistance.getValue()))).getValue();
     }
 
 }

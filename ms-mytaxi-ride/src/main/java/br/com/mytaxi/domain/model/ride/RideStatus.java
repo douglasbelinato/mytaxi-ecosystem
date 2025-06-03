@@ -67,4 +67,11 @@ public final class RideStatus {
         value = RideStatusEnum.IN_PROGRESS;
     }
 
+    public void toCompleted() {
+        if (isNotInProgress()) {
+            throw new DomainException("validation.invalid.ride.status.to.be.completed");
+        }
+        value = RideStatusEnum.COMPLETED;
+    }
+
 }

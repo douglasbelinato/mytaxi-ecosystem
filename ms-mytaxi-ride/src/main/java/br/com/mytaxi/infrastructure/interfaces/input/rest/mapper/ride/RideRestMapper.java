@@ -1,6 +1,7 @@
 package br.com.mytaxi.infrastructure.interfaces.input.rest.mapper.ride;
 
 import br.com.mytaxi.application.usecase.dto.acceptride.AcceptRideInputDTO;
+import br.com.mytaxi.application.usecase.dto.completeride.CompleteRideInputDTO;
 import br.com.mytaxi.application.usecase.dto.requestride.RequestRideInputDTO;
 import br.com.mytaxi.application.usecase.dto.requestride.RequestRideOutputDTO;
 import br.com.mytaxi.application.usecase.dto.searchride.SearchRideInputDTO;
@@ -55,6 +56,10 @@ public final class RideRestMapper {
 
     public static StartRideInputDTO toStartRideInputDTO(String id) {
         return StartRideInputDTO.builder().id(id).build();
+    }
+
+    public static CompleteRideInputDTO toCompleteRideInputDTO(String id) {
+        return CompleteRideInputDTO.builder().id(id).build();
     }
 
 }
