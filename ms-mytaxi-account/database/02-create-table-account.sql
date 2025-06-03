@@ -1,0 +1,12 @@
+CREATE TABLE account(
+    id VARCHAR(100) NOT NULL PRIMARY KEY,
+    name VARCHAR(20) NOT NULL,
+    surname VARCHAR(80) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    cpf VARCHAR(15) NOT NULL,
+    car_plate VARCHAR(20),
+    password VARCHAR(50) NOT NULL,
+    is_passenger BOOLEAN NOT NULL,
+    is_driver BOOLEAN NOT NULL,
+    date_insert TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
