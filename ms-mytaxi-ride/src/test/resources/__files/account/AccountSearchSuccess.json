@@ -1,0 +1,9 @@
+{
+  "id": "{{parameters.id}}",
+  "name": "Alice",
+  "surname": "Silva",
+  "email": "alice@host.com.br",
+  "cpf": "154.532.364-00",
+  "isPassenger": {{parameters.isPassenger}},
+  "isDriver": {{parameters.isDriver}}
+}
