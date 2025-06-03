@@ -21,12 +21,8 @@ class AcceptRideUseCaseImpl implements AcceptRideUseCase {
 
     @Override
     public void execute(AcceptRideInputDTO inputDTO) {
-        var rideIdCandidate = Id.of("id", inputDTO.id());
-        var driverIdCandidate = Id.of("driverId", inputDTO.driverId());
-        rideIdCandidate.validate();
-        driverIdCandidate.validate();
-        var rideId = rideIdCandidate.getValue();
-        var driverId = driverIdCandidate.getValue();
+        var rideId = Id.of("id", inputDTO.id()).getValue();
+        var driverId = Id.of("driverId", inputDTO.driverId()).getValue();
         var ride = rideRepository.findByIdOrThrow(rideId);
         var accountDTO = searchAccountGateway.search(driverId);
         if (accountDTO.isPassenger()) {
