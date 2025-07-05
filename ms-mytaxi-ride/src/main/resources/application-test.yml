@@ -27,6 +27,8 @@ logging:
 integration:
   account:
     host: http://localhost:${wiremock.port}
+  payment:
+    host: http://localhost:${wiremock.port}
 
 server:
   port: 8080

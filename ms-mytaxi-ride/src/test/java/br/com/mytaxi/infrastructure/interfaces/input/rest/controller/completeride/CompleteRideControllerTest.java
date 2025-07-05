@@ -2,13 +2,16 @@ package br.com.mytaxi.infrastructure.interfaces.input.rest.controller.completeri
 
 import br.com.mytaxi.application.output.rest.dto.account.AccountDTO;
 import br.com.mytaxi.infrastructure.config.test.BaseTest;
+import br.com.mytaxi.infrastructure.config.test.apimock.data.ApiMockTypeEnum;
 import br.com.mytaxi.infrastructure.config.test.apimock.data.accountsearch.AccountSearchApiMockData;
 import br.com.mytaxi.infrastructure.interfaces.input.rest.controller.sharedstep.AcceptRideSharedStep;
 import br.com.mytaxi.infrastructure.interfaces.input.rest.controller.sharedstep.RegisterPositionSharedStep;
 import br.com.mytaxi.infrastructure.interfaces.input.rest.controller.sharedstep.RequestRideSharedStep;
 import br.com.mytaxi.infrastructure.interfaces.input.rest.controller.sharedstep.StartRideSharedStep;
+import br.com.mytaxi.infrastructure.interfaces.input.rest.dto.completeride.CompleteRideRQ;
 import br.com.mytaxi.infrastructure.interfaces.input.rest.dto.exception.ExceptionRS;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
@@ -40,12 +43,16 @@ class CompleteRideControllerTest extends BaseTest {
         var driverId = UUID.randomUUID().toString();
         super.apiMockIntegration.mock(createAccountSearchMockData(passengerId, true));
         super.apiMockIntegration.mock(createAccountSearchMockData(driverId, false));
+        super.apiMockIntegration.mock(ApiMockTypeEnum.PAYMENT);
         var requestRideResponse = requestRideSharedStep.success(passengerId);
         acceptRideSharedStep.success(requestRideResponse.id(), driverId);
         startRideSharedStep.success(requestRideResponse.id());
         registerPositionSharedStep.success(requestRideResponse.id(), -23.529287790573242, -46.675448474977);
         registerPositionSharedStep.success(requestRideResponse.id(), -24.908133115138398, -53.49481208223108);
-        RestAssured.when()
+        RestAssured.given()
+                .contentType(ContentType.JSON)
+                .body(CompleteRideRQ.builder().creditCardToken("card_1N3T00LkdIwHu7ixRdxpVI1Q").build())
+                .when()
                 .post(String.format(PATH, requestRideResponse.id()))
                 .then()
                 .statusCode(204);
@@ -57,7 +64,10 @@ class CompleteRideControllerTest extends BaseTest {
         var passengerId = UUID.randomUUID().toString();
         super.apiMockIntegration.mock(createAccountSearchMockData(passengerId, true));
         var requestRideResponse = requestRideSharedStep.success(passengerId);
-        var response = RestAssured.when()
+        var response = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .body(CompleteRideRQ.builder().creditCardToken("card_1N3T00LkdIwHu7ixRdxpVI1Q").build())
+                .when()
                 .post(String.format(PATH, requestRideResponse.id()))
                 .then()
                 .statusCode(httpStatus)
@@ -74,7 +84,10 @@ class CompleteRideControllerTest extends BaseTest {
     void testC03ShouldNotCompleteARideThatDoesNotExist() {
         var httpStatus = 404;
         var rideId = UUID.randomUUID().toString();
-        var response = RestAssured.when()
+        var response = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .body(CompleteRideRQ.builder().creditCardToken("card_1N3T00LkdIwHu7ixRdxpVI1Q").build())
+                .when()
                 .post(String.format(PATH, rideId))
                 .then()
                 .statusCode(httpStatus)

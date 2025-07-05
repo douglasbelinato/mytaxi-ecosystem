@@ -1,5 +1,6 @@
 package br.com.mytaxi.application.usecase.feature.completeride.impl;
 
+import br.com.mytaxi.application.output.rest.gateway.payment.PaymentGateway;
 import br.com.mytaxi.application.usecase.dto.completeride.CompleteRideInputDTO;
 import br.com.mytaxi.application.usecase.feature.completeride.CompleteRideUseCase;
 import br.com.mytaxi.domain.model.common.Id;
@@ -16,6 +17,7 @@ class CompleteRideUseCaseImpl implements CompleteRideUseCase {
     private final RideRepository rideRepository;
     private final PositionRepository positionRepository;
     private final TotalDistanceCalculatorService totalDistanceCalculatorService;
+    private final PaymentGateway paymentGateway;
 
     @Override
     public void execute(CompleteRideInputDTO inputDTO) {
@@ -25,5 +27,6 @@ class CompleteRideUseCaseImpl implements CompleteRideUseCase {
         var totalDistance = totalDistanceCalculatorService.execute(positions);
         ride.complete(totalDistance);
         rideRepository.save(ride);
+        paymentGateway.process(ride.getFare(), inputDTO.creditCardToken());
     }
 }

@@ -8,6 +8,7 @@ import br.com.mytaxi.application.usecase.dto.searchride.SearchRideInputDTO;
 import br.com.mytaxi.application.usecase.dto.searchride.SearchRideOutputDTO;
 import br.com.mytaxi.application.usecase.dto.startride.StartRideInputDTO;
 import br.com.mytaxi.infrastructure.interfaces.input.rest.dto.acceptride.AcceptRideRQ;
+import br.com.mytaxi.infrastructure.interfaces.input.rest.dto.completeride.CompleteRideRQ;
 import br.com.mytaxi.infrastructure.interfaces.input.rest.dto.requestride.RequestRideRQ;
 import br.com.mytaxi.infrastructure.interfaces.input.rest.dto.requestride.RequestRideRS;
 import br.com.mytaxi.infrastructure.interfaces.input.rest.dto.searchride.RideRS;
@@ -58,8 +59,8 @@ public final class RideRestMapper {
         return StartRideInputDTO.builder().id(id).build();
     }
 
-    public static CompleteRideInputDTO toCompleteRideInputDTO(String id) {
-        return CompleteRideInputDTO.builder().id(id).build();
+    public static CompleteRideInputDTO toCompleteRideInputDTO(String id, CompleteRideRQ request) {
+        return CompleteRideInputDTO.builder().id(id).creditCardToken(request.creditCardToken()).build();
     }
 
 }

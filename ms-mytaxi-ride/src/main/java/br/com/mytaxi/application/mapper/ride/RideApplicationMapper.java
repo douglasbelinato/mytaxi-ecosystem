@@ -27,7 +27,7 @@ public final class RideApplicationMapper {
                 .driverId(ride.getDriverId() != null ? ride.getDriverId().getValue() : null)
                 .status(ride.getStatus().getValue().name())
                 .fare(ride.getFare() != null ? ride.getFare().getValue() : null)
-                .distance(ride.getDistance().getValue())
+                .distance(ride.getDistance() != null ? ride.getDistance().getValue() : null)
                 .latitudeFrom(ride.getFrom().getLatitude())
                 .longitudeFrom(ride.getFrom().getLongitude())
                 .latitudeTo(ride.getTo().getLatitude())

@@ -1,6 +1,6 @@
 package br.com.mytaxi.infrastructure.config.test.apimock.api.accountsearch;
 
-import br.com.mytaxi.infrastructure.config.test.apimock.api.ApiMock;
+import br.com.mytaxi.infrastructure.config.test.apimock.api.ApiMockWithData;
 import br.com.mytaxi.infrastructure.config.test.apimock.data.ApiMockTypeEnum;
 import br.com.mytaxi.infrastructure.config.test.apimock.data.accountsearch.AccountSearchApiMockData;
 import com.github.tomakehurst.wiremock.WireMockServer;
@@ -13,7 +13,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
 @Named
 @RequiredArgsConstructor
-class AccountSearchApiMock implements ApiMock<AccountSearchApiMockData> {
+class AccountSearchApiMockWithData implements ApiMockWithData<AccountSearchApiMockData> {
 
     private final WireMockServer wireMockServer;
 
@@ -33,6 +33,5 @@ class AccountSearchApiMock implements ApiMock<AccountSearchApiMockData> {
     public ApiMockTypeEnum getType() {
         return ApiMockTypeEnum.ACCOUNT_SEARCH;
     }
-
 
 }

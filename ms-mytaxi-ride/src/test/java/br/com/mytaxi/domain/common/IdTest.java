@@ -1,5 +1,6 @@
 package br.com.mytaxi.domain.common;
 
+import br.com.mytaxi.domain.exception.DomainException;
 import br.com.mytaxi.domain.model.common.Id;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class IdTest {
@@ -43,9 +44,9 @@ class IdTest {
         var candidate = Id.of("id", value);
         assertNotNull(candidate);
         assertNotNull(candidate.getConstraints());
-        assertNull(candidate.getValue());
         assertTrue(candidate.isNotValid());
-        assertEquals("id" + "=>invalid id;", candidate.getConstraints().getAllInline());
+        var e = assertThrows(DomainException.class, candidate::getValue);
+        assertEquals("id=>invalid id;", candidate.getConstraints().getAllInline());
     }
 
     public static Stream<Arguments> testOfInvalidIdScenarios() {

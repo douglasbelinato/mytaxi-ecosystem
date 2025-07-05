@@ -1,11 +1,10 @@
 package br.com.mytaxi.infrastructure.config.test.apimock.api;
 
-import br.com.mytaxi.infrastructure.config.test.apimock.data.ApiMockData;
 import br.com.mytaxi.infrastructure.config.test.apimock.data.ApiMockTypeEnum;
 
-public interface ApiMock<T extends ApiMockData> {
+public interface ApiMock {
 
-    void mock(T data);
+    void mock();
 
     ApiMockTypeEnum getType();
 
