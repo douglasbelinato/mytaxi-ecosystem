@@ -1,0 +1,7 @@
+CREATE TABLE transaction(
+    id VARCHAR(100) NOT NULL PRIMARY KEY,
+    ride_id VARCHAR(100) NOT NULL,
+    amount NUMERIC NOT NULL,
+    status TEXT NOT NULL,
+    date_insert TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
