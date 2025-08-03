@@ -38,5 +38,9 @@ public final class RideEntity {
     private Double latitudeTo;
     @Column(name = "longitude_to")
     private Double longitudeTo;
+    @Column(name = "last_latitude")
+    private Double lastLatitude;
+    @Column(name = "last_longitude")
+    private Double lastLongitude;
 
 }

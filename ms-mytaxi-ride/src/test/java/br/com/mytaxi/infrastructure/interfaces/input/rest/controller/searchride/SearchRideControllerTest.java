@@ -18,6 +18,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class SearchRideControllerTest extends BaseTest {
 
@@ -27,7 +28,7 @@ class SearchRideControllerTest extends BaseTest {
     private RequestRideSharedStep requestRideSharedStep;
 
     @Test
-    void testC01ShouldSuccessfullySearchRide() {
+    void testC01ShouldSuccessfullySearchARequestedRide() {
         var passengerId = UUID.randomUUID().toString();
         super.apiMockIntegration.mock(AccountSearchApiMockData.builder()
                 .account(AccountDTO.builder().id(passengerId).isPassenger(true).build())
@@ -50,6 +51,10 @@ class SearchRideControllerTest extends BaseTest {
                 .as(RideRS.class);
         assertDoesNotThrow(() -> UUID.fromString(searchResponse.id()));
         assertEquals(request.passengerId(), searchResponse.passengerId());
+        assertEquals("Alice", searchResponse.passengerName());
+        assertEquals("Silva", searchResponse.passengerSurname());
+        assertEquals("alice@host.com.br", searchResponse.passengerEmail());
+        assertNull(searchResponse.driverId());
         assertEquals(request.latitudeFrom(), searchResponse.latitudeFrom());
         assertEquals(request.longitudeFrom(), searchResponse.longitudeFrom());
         assertEquals(request.latitudeTo(), searchResponse.latitudeTo());

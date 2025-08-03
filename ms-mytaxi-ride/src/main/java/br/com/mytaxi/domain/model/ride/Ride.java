@@ -3,7 +3,7 @@ package br.com.mytaxi.domain.model.ride;
 import br.com.mytaxi.domain.exception.DomainException;
 import br.com.mytaxi.domain.model.common.Candidate;
 import br.com.mytaxi.domain.model.common.Constraints;
-import br.com.mytaxi.domain.model.common.Coordinate;
+import br.com.mytaxi.domain.model.common.Coordinates;
 import br.com.mytaxi.domain.model.common.Distance;
 import br.com.mytaxi.domain.model.common.Id;
 import br.com.mytaxi.domain.model.common.Money;
@@ -30,14 +30,15 @@ public final class Ride {
     private final RideStatus status;
     private Money fare;
     private Distance distance;
-    private Coordinate from;
-    private Coordinate to;
+    private Coordinates from;
+    private Coordinates to;
+    private Coordinates lastPositionRegistered;
 
     public static Candidate<Ride> create(String passengerId, Double latitudeFrom, Double longitudeFrom,
                                          Double latitudeTo, Double longitudeTo) {
         var passengerIdCandidate = Id.of("passengerId", passengerId);
-        var fromCandidate = Coordinate.create("from", latitudeFrom, longitudeFrom);
-        var toCandidate = Coordinate.create("to", latitudeTo, longitudeTo);
+        var fromCandidate = Coordinates.create("from", latitudeFrom, longitudeFrom);
+        var toCandidate = Coordinates.create("to", latitudeTo, longitudeTo);
         var constraints = Constraints.builder()
                 .fieldName("ride")
                 .addFromCandidates(List.of(
@@ -53,6 +54,8 @@ public final class Ride {
                     .status(RideStatus.create().getValue())
                     .from(fromCandidate.getValue())
                     .to(toCandidate.getValue())
+                    .lastPositionRegistered(fromCandidate.getValue())
+                    .distance(Distance.of(0d).getValue())
                     .build());
         }
         return candidateBuilder.build();
@@ -60,13 +63,16 @@ public final class Ride {
 
     public static Candidate<Ride> of(String id, String passengerId, String driverId, String status, BigDecimal fare,
                                      Double distance, Double latitudeFrom, Double longitudeFrom,
-                                     Double latitudeTo, Double longitudeTo) {
+                                     Double latitudeTo, Double longitudeTo, Double lastLongitude,
+                                     Double lastLatitude) {
         var idCandidate = Id.of("id", id);
         var passengerIdCandidate = Id.of("passengerId", passengerId);
         var statusCandidate = RideStatus.of(status);
-        var fromCandidate = Coordinate.create("from", latitudeFrom, longitudeFrom);
-        var toCandidate = Coordinate.create("to", latitudeTo, longitudeTo);
-        Candidate<Distance> distanceCandidate = null;
+        var fromCandidate = Coordinates.create("from", latitudeFrom, longitudeFrom);
+        var toCandidate = Coordinates.create("to", latitudeTo, longitudeTo);
+        var lastPositionRegisteredCandidate = Coordinates.create("lastPositionRegistered",
+                lastLatitude, lastLongitude);
+        var distanceCandidate = Distance.of(distance);
         Candidate<Id> driverIdCandidate = null;
         Candidate<Money> fareCandidate = null;
         var constraintsBuilder = Constraints.builder()
@@ -75,7 +81,9 @@ public final class Ride {
                         passengerIdCandidate,
                         statusCandidate,
                         fromCandidate,
-                        toCandidate
+                        toCandidate,
+                        lastPositionRegisteredCandidate,
+                        distanceCandidate
                 ));
         if (statusCandidate.isValid()) {
             if (statusCandidate.getValue().isNotRequested()) {
@@ -86,10 +94,8 @@ public final class Ride {
             }
             if (statusCandidate.getValue().isCompleted()) {
                 fareCandidate = Money.create("fare", fare);
-                distanceCandidate = Distance.of(distance);
                 constraintsBuilder.addFromCandidates(List.of(
-                        fareCandidate,
-                        distanceCandidate
+                        fareCandidate
                 ));
             }
         }
@@ -104,7 +110,8 @@ public final class Ride {
                     .fare(fareCandidate != null ? fareCandidate.getValue() : null)
                     .from(fromCandidate.getValue())
                     .to(toCandidate.getValue())
-                    .distance(distanceCandidate != null ? distanceCandidate.getValue() : null)
+                    .lastPositionRegistered(lastPositionRegisteredCandidate.getValue())
+                    .distance(distanceCandidate.getValue())
                     .build());
         }
         return candidateBuilder.build();
@@ -120,6 +127,13 @@ public final class Ride {
 
     public void start() {
         status.toInProgress();
+    }
+
+    public void updatePosition(Double latitude, Double longitude) {
+        var newPosition = Coordinates.create("lastPositionRegistered", latitude, longitude).getValue();
+        var distanceToBeAdded = Distance.create(lastPositionRegistered, newPosition).getValue();
+        this.distance = this.distance.add(distanceToBeAdded);
+        this.lastPositionRegistered = newPosition;
     }
 
     public void complete(Distance totalDistance) {

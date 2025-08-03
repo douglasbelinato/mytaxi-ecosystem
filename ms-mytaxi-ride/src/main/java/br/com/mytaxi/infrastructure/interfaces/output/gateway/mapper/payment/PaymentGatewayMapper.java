@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PaymentGatewayMapper {
 
-    public static PaymentRQ toPaymentRQ(BigDecimal amount, String creditCardToken) {
-        return PaymentRQ.builder().amount(amount).creditCardToken(creditCardToken).build();
+    public static PaymentRQ toPaymentRQ(String rideId, BigDecimal amount, String creditCardToken) {
+        return PaymentRQ.builder().rideId(rideId).amount(amount).creditCardToken(creditCardToken).build();
     }
 
 }

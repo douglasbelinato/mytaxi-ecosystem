@@ -17,17 +17,20 @@ public final class RideDatabaseMapper {
                 .status(ride.getStatus().getValue().name())
                 .fare(ride.getFare() != null ? ride.getFare().getValue() : null)
                 .distance(ride.getDistance() != null ? ride.getDistance().getValue() : null)
-                .latitudeFrom(ride.getFrom() != null ? ride.getFrom().getLatitude() : null)
-                .longitudeFrom(ride.getFrom() != null ? ride.getFrom().getLongitude() : null)
-                .latitudeTo(ride.getTo() != null ? ride.getTo().getLatitude() : null)
-                .longitudeTo(ride.getTo() != null ? ride.getTo().getLongitude() : null)
+                .latitudeFrom(ride.getFrom().getLatitude())
+                .longitudeFrom(ride.getFrom().getLongitude())
+                .latitudeTo(ride.getTo().getLatitude())
+                .longitudeTo(ride.getTo().getLongitude())
+                .lastLatitude(ride.getLastPositionRegistered().getLatitude())
+                .lastLongitude(ride.getLastPositionRegistered().getLongitude())
                 .build();
     }
 
     public static Candidate<Ride> toDomain(RideEntity entity) {
         return Ride.of(entity.getId(), entity.getPassengerId(), entity.getDriverId(), entity.getStatus(),
                 entity.getFare(), entity.getDistance(), entity.getLatitudeFrom(),
-                entity.getLongitudeFrom(), entity.getLatitudeTo(), entity.getLongitudeTo());
+                entity.getLongitudeFrom(), entity.getLatitudeTo(), entity.getLongitudeTo(), entity.getLongitudeFrom(),
+                entity.getLastLongitude());
     }
 
 }

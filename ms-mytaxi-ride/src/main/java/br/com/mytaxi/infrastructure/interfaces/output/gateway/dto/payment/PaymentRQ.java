@@ -5,5 +5,5 @@ import lombok.Builder;
 import java.math.BigDecimal;
 
 @Builder
-public record PaymentRQ(BigDecimal amount, String creditCardToken) {
+public record PaymentRQ(String rideId, BigDecimal amount, String creditCardToken) {
 }

@@ -9,5 +9,7 @@ CREATE TABLE ride(
 	longitude_from double precision,
 	latitude_to double precision,
 	longitude_to double precision,
+	last_latitude double precision,
+	last_longitude double precision,
     date_insert TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

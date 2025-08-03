@@ -15,8 +15,8 @@ public final class PositionDatabaseMapper {
         return PositionEntity.builder()
                 .id(position.getId().getValue())
                 .rideId(position.getRideId().getValue())
-                .latitude(position.getCoordinate().getLatitude())
-                .longitude(position.getCoordinate().getLongitude())
+                .latitude(position.getCoordinates().getLatitude())
+                .longitude(position.getCoordinates().getLongitude())
                 .build();
     }
 

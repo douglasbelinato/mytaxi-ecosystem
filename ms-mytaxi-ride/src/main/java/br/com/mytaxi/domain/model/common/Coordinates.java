@@ -13,19 +13,19 @@ import org.apache.commons.lang3.ObjectUtils;
 @EqualsAndHashCode
 @Getter
 @ToString
-public final class Coordinate {
+public final class Coordinates {
 
     private final Double latitude;
     private final Double longitude;
 
-    public static Candidate<Coordinate> create(String fieldName, Double latitude, Double longitude) {
+    public static Candidate<Coordinates> create(String fieldName, Double latitude, Double longitude) {
         var finalFieldName = ObjectUtils.defaultIfNull(fieldName, "undefined");
-        var candidateBuilder = Candidate.<Coordinate>builder();
+        var candidateBuilder = Candidate.<Coordinates>builder();
         var constraintsBuilder = Constraints.builder().fieldName(finalFieldName);
         if (isAnInvalidateLatitude(latitude) || isAnInvalidateLongitude(longitude)) {
             constraintsBuilder.add(finalFieldName, "latitude must be between -90 and 90 degrees and longitude must be between -180 and 180 degrees");
         } else {
-            candidateBuilder.value(Coordinate.builder().latitude(latitude).longitude(longitude).build());
+            candidateBuilder.value(Coordinates.builder().latitude(latitude).longitude(longitude).build());
         }
         return candidateBuilder.constraints(constraintsBuilder.build()).build();
     }

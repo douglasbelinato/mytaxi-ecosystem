@@ -1,4 +1,5 @@
 package br.com.mytaxi.infrastructure.interfaces.output.gateway.dto.account;
 
-public record SearchAccountRS(String id, boolean isPassenger, boolean isDriver) {
+public record SearchAccountRS(String id, String name, String surname, String email,
+                              boolean isPassenger, boolean isDriver) {
 }

@@ -8,6 +8,7 @@ import br.com.mytaxi.domain.repository.position.PositionRepository;
 import br.com.mytaxi.domain.repository.ride.RideRepository;
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @Named
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ class RegisterPositionUseCaseImpl implements RegisterPositionUseCase {
     private final RideRepository rideRepository;
     private final PositionRepository positionRepository;
 
+    @Transactional
     @Override
     public void execute(RegisterPositionInputDTO inputDTO) {
         var position = Position.create(inputDTO.rideId(), inputDTO.latitude(), inputDTO.longitude()).getValue();
@@ -23,6 +25,8 @@ class RegisterPositionUseCaseImpl implements RegisterPositionUseCase {
         if (ride.getStatus().isNotInProgress()) {
             throw new DomainException("validation.ride.must.be.in.progress.to.register.position");
         }
+        ride.updatePosition(inputDTO.latitude(), inputDTO.longitude());
+        rideRepository.save(ride);
         positionRepository.save(position);
     }
 }

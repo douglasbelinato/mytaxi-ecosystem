@@ -2,7 +2,7 @@ package br.com.mytaxi.domain.model.position;
 
 import br.com.mytaxi.domain.model.common.Candidate;
 import br.com.mytaxi.domain.model.common.Constraints;
-import br.com.mytaxi.domain.model.common.Coordinate;
+import br.com.mytaxi.domain.model.common.Coordinates;
 import br.com.mytaxi.domain.model.common.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,11 +22,11 @@ public final class Position {
     @EqualsAndHashCode.Include
     private final Id id;
     private final Id rideId;
-    private final Coordinate coordinate;
+    private final Coordinates coordinates;
 
     public static Candidate<Position> create(String rideId, Double latitude, Double longitude) {
         var rideIdCandidate = Id.of("rideId", rideId);
-        var coordinateCandidate = Coordinate.create("coordinate", latitude, longitude);
+        var coordinateCandidate = Coordinates.create("coordinate", latitude, longitude);
         var constraints = Constraints.builder()
                 .fieldName("position")
                 .addFromCandidates(
@@ -37,7 +37,7 @@ public final class Position {
             candidateBuilder.value(Position.builder()
                     .id(Id.create().getValue())
                     .rideId(rideIdCandidate.getValue())
-                    .coordinate(coordinateCandidate.getValue())
+                    .coordinates(coordinateCandidate.getValue())
                     .build());
         }
         return candidateBuilder.build();
@@ -46,7 +46,7 @@ public final class Position {
     public static Candidate<Position> of(String id, String rideId, Double latitude, Double longitude) {
         var idCandidate = Id.of("id", id);
         var rideIdCandidate = Id.of("rideId", rideId);
-        var coordinateCandidate = Coordinate.create("coordinate", latitude, longitude);
+        var coordinateCandidate = Coordinates.create("coordinate", latitude, longitude);
         var constraints = Constraints.builder()
                 .fieldName("position")
                 .addFromCandidates(
@@ -57,7 +57,7 @@ public final class Position {
             candidateBuilder.value(Position.builder()
                     .id(idCandidate.getValue())
                     .rideId(rideIdCandidate.getValue())
-                    .coordinate(coordinateCandidate.getValue())
+                    .coordinates(coordinateCandidate.getValue())
                     .build());
         }
         return candidateBuilder.build();

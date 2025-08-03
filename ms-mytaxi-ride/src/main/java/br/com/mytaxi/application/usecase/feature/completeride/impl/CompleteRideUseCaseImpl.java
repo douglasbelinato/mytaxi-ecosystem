@@ -27,6 +27,6 @@ class CompleteRideUseCaseImpl implements CompleteRideUseCase {
         var totalDistance = totalDistanceCalculatorService.execute(positions);
         ride.complete(totalDistance);
         rideRepository.save(ride);
-        paymentGateway.process(ride.getFare(), inputDTO.creditCardToken());
+        paymentGateway.process(ride.getId(), ride.getFare(), inputDTO.creditCardToken());
     }
 }

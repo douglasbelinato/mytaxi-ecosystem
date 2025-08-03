@@ -21,7 +21,7 @@ public final class Distance {
 
     private final Double value;
 
-    public static Candidate<Distance> create(Coordinate from, Coordinate to) {
+    public static Candidate<Distance> create(Coordinates from, Coordinates to) {
         var fieldName = "distance";
         var candidateBuilder = Candidate.<Distance>builder();
         var constraints = Constraints.builder().fieldName(fieldName);
@@ -49,7 +49,15 @@ public final class Distance {
         return candidateBuilder.constraints(constraints.build()).build();
     }
 
-    private static Double calculateHaversineFormula(Coordinate from, Coordinate to) {
+    public Distance add(Distance distanceToBeAdded) {
+        if (distanceToBeAdded != null) {
+            var newDistance = this.value + distanceToBeAdded.value;
+            return Distance.of(newDistance).getValue();
+        }
+        return this;
+    }
+
+    private static Double calculateHaversineFormula(Coordinates from, Coordinates to) {
         var earthRadiusInKm = 6371.0088;
         var latitudeFrom = from.getLatitude();
         var longitudeFrom = from.getLongitude();

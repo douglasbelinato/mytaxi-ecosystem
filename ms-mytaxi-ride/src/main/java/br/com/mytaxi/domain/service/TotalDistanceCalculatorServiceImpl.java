@@ -20,7 +20,7 @@ class TotalDistanceCalculatorServiceImpl implements TotalDistanceCalculatorServi
             var currentPosition = positions.get(i);
             var nextPosition = positions.get(i + 1);
             total += Distance.create(
-                    currentPosition.getCoordinate(), nextPosition.getCoordinate()).getValue().getValue();
+                    currentPosition.getCoordinates(), nextPosition.getCoordinates()).getValue().getValue();
         }
         return Distance.of(total).getValue();
     }
