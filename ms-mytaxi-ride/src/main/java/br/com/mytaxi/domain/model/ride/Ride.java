@@ -143,4 +143,8 @@ public final class Ride {
                 new BigDecimal("2.1").multiply(BigDecimal.valueOf(totalDistance.getValue()))).getValue();
     }
 
+//    public String getId() {
+//        return id.getValue();
+//    }
+
 }
