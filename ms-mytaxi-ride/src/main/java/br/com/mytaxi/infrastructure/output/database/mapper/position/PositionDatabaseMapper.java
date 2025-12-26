@@ -1,6 +1,5 @@
 package br.com.mytaxi.infrastructure.output.database.mapper.position;
 
-import br.com.mytaxi.domain.model.common.Candidate;
 import br.com.mytaxi.domain.model.position.Position;
 import br.com.mytaxi.infrastructure.output.database.entity.position.PositionEntity;
 import org.mapstruct.Mapper;

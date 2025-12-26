@@ -6,7 +6,6 @@ import br.com.mytaxi.application.usecase.dto.requestride.RequestRideOutputDTO;
 import br.com.mytaxi.application.usecase.dto.searchride.SearchRideOutputDTO;
 import br.com.mytaxi.domain.model.common.Candidate;
 import br.com.mytaxi.domain.model.ride.Ride;
-import br.com.mytaxi.domain.model.ride.RideStatus;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

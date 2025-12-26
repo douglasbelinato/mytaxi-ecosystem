@@ -1,14 +1,14 @@
 package br.com.mytaxi.integrationtests.rest.registerposition;
 
 import br.com.mytaxi.application.output.rest.dto.account.AccountDTO;
+import br.com.mytaxi.infrastructure.input.rest.dto.exception.ExceptionRS;
+import br.com.mytaxi.infrastructure.input.rest.dto.registerposition.RegisterPositionRQ;
 import br.com.mytaxi.integrationtests.config.BaseTest;
 import br.com.mytaxi.integrationtests.config.apimock.data.accountsearch.AccountSearchApiMockData;
 import br.com.mytaxi.integrationtests.rest.sharedstep.AcceptRideSharedStep;
 import br.com.mytaxi.integrationtests.rest.sharedstep.RegisterPositionSharedStep;
 import br.com.mytaxi.integrationtests.rest.sharedstep.RequestRideSharedStep;
 import br.com.mytaxi.integrationtests.rest.sharedstep.StartRideSharedStep;
-import br.com.mytaxi.infrastructure.input.rest.dto.exception.ExceptionRS;
-import br.com.mytaxi.infrastructure.input.rest.dto.registerposition.RegisterPositionRQ;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
