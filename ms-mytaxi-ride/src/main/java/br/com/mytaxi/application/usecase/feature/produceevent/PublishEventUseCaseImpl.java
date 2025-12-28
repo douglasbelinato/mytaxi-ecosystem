@@ -5,14 +5,16 @@ import br.com.mytaxi.domain.model.event.Event;
 import br.com.mytaxi.domain.repository.event.EventRepository;
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @Named
 @RequiredArgsConstructor
-class ProduceEventUseCaseImpl implements ProduceEventUseCase {
+class PublishEventUseCaseImpl implements PublishEventUseCase {
 
     private final EventRepository eventRepository;
     private final PublishEventGateway publishEventGateway;
 
+    @Transactional
     @Override
     public void execute() {
         var events = eventRepository.listAllPending();

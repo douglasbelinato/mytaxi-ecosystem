@@ -2,7 +2,6 @@ package br.com.mytaxi.infrastructure.output.database.mapper.event;
 
 import br.com.mytaxi.domain.model.event.Event;
 import br.com.mytaxi.infrastructure.output.database.entity.event.EventEntity;
-import br.com.mytaxi.infrastructure.output.database.entity.event.EventStatus;
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +20,7 @@ public class EventDatabaseMapper {
                 .id(event.getId())
                 .aggregateId(event.getAggregateId())
                 .type(event.getType())
-                .status(EventStatus.PENDING)
+                .status(event.getStatus())
                 .payload(event.getPayload())
                 .retryCount(event.getRetryCount())
                 .build();

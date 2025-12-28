@@ -16,6 +16,24 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   jackson:
     default-property-inclusion: non_null
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+          auto-create-topics: true
+          producer-properties:
+            enable.idempotence: true
+            acks: all
+            retries: 3
+            max.in.flight.requests.per.connection: 5 # Max of request unconfirmed by connection (value suitable for idempotence)
+      bindings:
+        rideEvents-out-0:
+          destination: mytaxi.ride.events
+          content-type: application/json
+          producer:
+            partition-key-expression: headers['aggregateId']
+            partition-count: 3
 
 feign:
   client:

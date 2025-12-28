@@ -39,7 +39,7 @@ class CompleteRideUseCaseImpl implements CompleteRideUseCase {
                 jsonMapper.toJson(RideCompletedEventPayload.builder()
                         .version(ONE)
                         .rideId(ride.getId().getValue())
-                        .fare(ride.getFare().getValue())
+                        .amount(ride.getFare().getValue())
                         .creditCardToken(inputDTO.creditCardToken())
                         .build())));
     }

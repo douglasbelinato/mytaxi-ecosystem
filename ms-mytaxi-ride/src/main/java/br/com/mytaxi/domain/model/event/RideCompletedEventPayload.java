@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.math.BigDecimal;
 
 @Builder
-public record RideCompletedEventPayload(Integer version, String aggregateId, String rideId, BigDecimal fare,
+public record RideCompletedEventPayload(Integer version, String aggregateId, String rideId, BigDecimal amount,
                                         String creditCardToken)
         implements EventPayload {
 }
