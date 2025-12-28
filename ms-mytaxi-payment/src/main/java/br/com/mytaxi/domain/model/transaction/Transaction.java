@@ -25,11 +25,13 @@ public final class Transaction {
     private final Id id;
     private final Id rideId;
     private final Money amount;
+    private final Text creditCardToken;
     private final Text status;
 
-    public static Candidate<Transaction> create(String rideId, BigDecimal amount) {
+    public static Candidate<Transaction> create(String rideId, BigDecimal amount, String creditCardToken) {
         var rideIdCandidate = Id.of(rideId);
         var amountCandidate = Money.create("amount", amount);
+        var creditCardTokenCandidate = Text.create("creditCardToken", creditCardToken, 3, 100);
         var statusCandidate = Text.create("status", "Paid", 3, 20);
         var constraints = Constraints.builder().addFromCandidates(
                 List.of(rideIdCandidate, amountCandidate, statusCandidate)
@@ -40,16 +42,19 @@ public final class Transaction {
                     .id(Id.create().getValue())
                     .rideId(rideIdCandidate.getValue())
                     .amount(amountCandidate.getValue())
+                    .creditCardToken(creditCardTokenCandidate.getValue())
                     .status(statusCandidate.getValue())
                     .build());
         }
         return candidate.build();
     }
 
-    public static Candidate<Transaction> of(String id, String rideId, BigDecimal amount, String status) {
+    public static Candidate<Transaction> of(String id, String rideId, BigDecimal amount, String creditCardToken,
+                                            String status) {
         var idCandidate = Id.of(id);
         var rideIdCandidate = Id.of(rideId);
         var amountCandidate = Money.create("amount", amount);
+        var creditCardTokenCandidate = Text.create("creditCardToken", creditCardToken, 3, 100);
         var statusCandidate = Text.create("status", status, 3, 20);
         var constraints = Constraints.builder().addFromCandidates(
                 List.of(idCandidate, rideIdCandidate, amountCandidate, statusCandidate)
@@ -60,6 +65,7 @@ public final class Transaction {
                     .id(idCandidate.getValue())
                     .rideId(rideIdCandidate.getValue())
                     .amount(amountCandidate.getValue())
+                    .creditCardToken(creditCardTokenCandidate.getValue())
                     .status(statusCandidate.getValue())
                     .build());
         }

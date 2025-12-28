@@ -16,6 +16,26 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   jackson:
     default-property-inclusion: non_null
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+          auto-create-topics: true
+          consumer-properties:
+            enable.auto.commit: false
+            isolation.level: read_committed
+      function:
+        definition: rideEvents
+      bindings:
+        rideEvents-in-0:
+          destination: mytaxi.ride.events
+          group: payment-service
+          content-type: application/json
+          consumer:
+            max-attempts: 3
+            back-off-initial-interval: 1000
+            back-off-multiplier: 2.0
 
 server:
   port: 8082

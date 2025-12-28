@@ -6,5 +6,5 @@ import lombok.Builder;
 import java.math.BigDecimal;
 
 @Builder
-public record PayRideInputDTO(String rideId, BigDecimal amount) implements UseCaseInputDTO {
+public record PayRideInputDTO(String rideId, BigDecimal amount, String creditCardToken) implements UseCaseInputDTO {
 }

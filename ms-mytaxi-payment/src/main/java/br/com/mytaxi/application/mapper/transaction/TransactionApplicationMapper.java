@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public final class TransactionApplicationMapper {
 
     public static Candidate<Transaction> toDomain(PayRideInputDTO dto) {
-        return Transaction.create(dto.rideId(), dto.amount());
+        return Transaction.create(dto.rideId(), dto.amount(), dto.creditCardToken());
     }
 }

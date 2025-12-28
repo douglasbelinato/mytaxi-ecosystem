@@ -15,9 +15,8 @@ class TransactionRepositoryImpl implements TransactionRepository {
     private final TransactionJpaRepository transactionJpaRepository;
 
     @Override
-    public Transaction save(Transaction transaction) {
-        var entity = transactionJpaRepository.save(TransactionDatabaseMapper.toEntity(transaction));
-        return TransactionDatabaseMapper.toDomain(entity).getValue();
+    public void save(Transaction transaction) {
+        transactionJpaRepository.save(TransactionDatabaseMapper.toEntity(transaction));
     }
 
     @Override

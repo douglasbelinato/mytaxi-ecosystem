@@ -26,6 +26,8 @@ public class TransactionEntity {
     @Column(name = "ride_id")
     private String rideId;
     private BigDecimal amount;
+    @Column(name = "credit_card_token")
+    private String creditCardToken;
     private String status;
 
 }

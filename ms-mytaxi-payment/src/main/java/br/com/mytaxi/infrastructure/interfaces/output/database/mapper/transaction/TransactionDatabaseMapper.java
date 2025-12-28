@@ -14,12 +14,13 @@ public final class TransactionDatabaseMapper {
                 .id(transaction.getId().getValue())
                 .rideId(transaction.getRideId().getValue())
                 .amount(transaction.getAmount().getValue())
+                .creditCardToken(transaction.getCreditCardToken().getValue())
                 .status(transaction.getStatus().getValue())
                 .build();
     }
 
     public static Candidate<Transaction> toDomain(TransactionEntity entity) {
-        return Transaction.of(entity.getId(), entity.getRideId(), entity.getAmount(), entity.getStatus());
+        return Transaction.of(entity.getId(), entity.getRideId(), entity.getAmount(), entity.getStatus(), entity.getStatus());
     }
 
 }

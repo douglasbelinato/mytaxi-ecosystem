@@ -5,7 +5,7 @@ import br.com.mytaxi.domain.model.transaction.Transaction;
 
 public interface TransactionRepository {
 
-    Transaction save(Transaction transaction);
+    void save(Transaction transaction);
 
     Transaction findByIdOrThrow(Id id);
 

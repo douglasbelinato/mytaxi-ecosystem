@@ -18,6 +18,14 @@ spring:
   h2:
     console:
       enabled: true
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          brokers: localhost:9092
+      function:
+        definition: rideEvents
 
 logging:
   level:
