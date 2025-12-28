@@ -16,6 +16,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   jackson:
     default-property-inclusion: non_null
+  data:
+    redis:
+      host: localhost
+      port: 6379
   cloud:
     stream:
       kafka:

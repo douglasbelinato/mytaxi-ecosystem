@@ -26,6 +26,7 @@
         <commons-io.version>2.14.0</commons-io.version>
         <rest-assured.version>5.5.5</rest-assured.version>
         <cucumber.version>7.18.1</cucumber.version>
+        <shedlock.version>5.16.0</shedlock.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -98,6 +99,20 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-spring</artifactId>
+            <version>${shedlock.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-provider-redis-spring</artifactId>
+            <version>${shedlock.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

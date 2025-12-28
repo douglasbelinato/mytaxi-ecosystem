@@ -5,6 +5,7 @@ import br.com.mytaxi.domain.model.event.Event;
 import br.com.mytaxi.domain.repository.event.EventRepository;
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 @Named
@@ -18,8 +19,10 @@ class PublishEventUseCaseImpl implements PublishEventUseCase {
     @Override
     public void execute() {
         var events = eventRepository.listAllPending();
-        events.forEach(Event::publish);
-        publishEventGateway.publish(events);
-        eventRepository.saveAll(events);
+        if (CollectionUtils.isNotEmpty(events)) {
+            events.forEach(Event::publish);
+            publishEventGateway.publish(events);
+            eventRepository.saveAll(events);
+        }
     }
 }
